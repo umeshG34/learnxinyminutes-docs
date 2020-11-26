@@ -13,6 +13,7 @@ contributors:
     - ["Clayton Walker", "https://github.com/cwalk"]
     - ["Leonid Shevtsov", "https://github.com/leonid-shevtsov"]
     - ["Michael Graf", "https://github.com/maerf0x0"]
+    - ["John Arundel", "https://github.com/bitfield"]
 ---
 
 Go was created out of the need to get work done. It's not the latest trend
@@ -109,12 +110,22 @@ can include line breaks.` // Same string type.
 	a5 := [...]int{3, 1, 5, 10, 100} // An array initialized with a fixed size of five
 	// elements, with values 3, 1, 5, 10, and 100.
 
+	// Arrays have value semantics.
+	a4_cpy := a4            // a4_cpy is a copy of a4, two separate instances.
+	a4_cpy[0] = 25          // Only a4_cpy is changed, a4 stays the same.
+	fmt.Println(a4_cpy[0] == a4[0]) // false
+
 	// Slices have dynamic size. Arrays and slices each have advantages
 	// but use cases for slices are much more common.
 	s3 := []int{4, 5, 9}    // Compare to a5. No ellipsis here.
 	s4 := make([]int, 4)    // Allocates slice of 4 ints, initialized to all 0.
 	var d2 [][]float64      // Declaration only, nothing allocated here.
 	bs := []byte("a slice") // Type conversion syntax.
+
+	// Slices (as well as maps and channels) have reference semantics.
+	s3_cpy := s3            // Both variables point to the same instance.
+	s3_cpy[0] = 0           // Which means both are updated.
+	fmt.Println(s3_cpy[0] == s3[0]) // true	
 
 	// Because they are dynamic, slices can be appended to on-demand.
 	// To append elements to a slice, the built-in append() function is used.
@@ -168,10 +179,11 @@ func learnNamedReturns(x, y int) (z int) {
 
 // Go is fully garbage collected. It has pointers but no pointer arithmetic.
 // You can make a mistake with a nil pointer, but not by incrementing a pointer.
+// Unlike in C/Cpp taking and returning an address of a local varible is also safe. 
 func learnMemory() (p, q *int) {
 	// Named return values p and q have type pointer to int.
 	p = new(int) // Built-in function new allocates memory.
-	// The allocated int is initialized to 0, p is no longer nil.
+	// The allocated int slice is initialized to 0, p is no longer nil.
 	s := make([]int, 20) // Allocate 20 ints as a single block of memory.
 	s[3] = 7             // Assign one of them.
 	r := -2              // Declare another local variable.
@@ -448,7 +460,7 @@ There you can follow the tutorial, play interactively, and read lots.
 Aside from a tour, [the docs](https://golang.org/doc/) contain information on
 how to write clean and effective Go code, package and command docs, and release history.
 
-The language definition itself is highly recommended. It's easy to read
+The [Go language specification](https://golang.org/ref/spec) itself is highly recommended. It's easy to read
 and amazingly short (as language definitions go these days.)
 
 You can play around with the code on [Go playground](https://play.golang.org/p/tnWMjr16Mm). Try to change it and run it from your browser! Note that you can use [https://play.golang.org](https://play.golang.org) as a [REPL](https://en.wikipedia.org/wiki/Read-eval-print_loop) to test things and code in your browser, without even installing Go.
@@ -460,5 +472,10 @@ idioms. Or you can click on a function name in [the
 documentation](http://golang.org/pkg/) and the source code comes up!
 
 Another great resource to learn Go is [Go by example](https://gobyexample.com/).
+
+There are many excellent conference talks and video tutorials on Go available on YouTube, and here are three playlists of the very best, tailored for beginners, intermediate, and advanced Gophers respectively:
+* [Golang University 101](https://www.youtube.com/playlist?list=PLEcwzBXTPUE9V1o8mZdC9tNnRZaTgI-1P) introduces fundamental Go concepts and shows you how to use the Go tools to create and manage Go code
+* [Golang University 201](https://www.youtube.com/playlist?list=PLEcwzBXTPUE_5m_JaMXmGEFgduH8EsuTs) steps it up a notch, explaining important techniques like testing, web services, and APIs
+* [Golang University 301](https://www.youtube.com/watch?v=YHRO5WQGh0k&list=PLEcwzBXTPUE8KvXRFmmfPEUmKoy9LfmAf) dives into more advanced topics like the Go scheduler, implementation of maps and channels, and optimisation techniques
 
 Go Mobile adds support for mobile platforms (Android and iOS). You can write all-Go native mobile apps or write a library that contains bindings from a Go package, which can be invoked via Java (Android) and Objective-C (iOS). Check out the [Go Mobile page](https://github.com/golang/go/wiki/Mobile) for more information.

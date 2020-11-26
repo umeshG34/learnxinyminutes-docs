@@ -181,6 +181,9 @@ array = [1, 2, 3, 4, 5] #=> [1, 2, 3, 4, 5]
 # Arrays can contain different types of items.
 [1, 'hello', false] #=> [1, "hello", false]
 
+# You might prefer %w instead of quotes
+%w[foo bar baz] #=> ["foo", "bar", "baz"]
+
 # Arrays can be indexed.
 # From the front...
 array[0] #=> 1
@@ -324,6 +327,11 @@ puts doubled
 puts array
 #=> [1,2,3,4,5]
 
+# another useful syntax is .map(&:method)
+a = ["FOO", "BAR", "BAZ"]
+a.map { |s| s.downcase } #=> ["foo", "bar", "baz"]
+a.map(&:downcase) #=> ["foo", "bar", "baz"]
+
 # Case construct
 grade = 'B'
 
@@ -429,6 +437,16 @@ guests { |n| "You have #{n} guests." }
 def guests(*array)
   array.each { |guest| puts guest }
 end
+
+# There is also the shorthand block syntax. It's most useful when you need
+# to call a simple method on all array items.
+upcased = ['Watch', 'these', 'words', 'get', 'upcased'].map(&:upcase)
+puts upcased
+#=> ["WATCH", "THESE", "WORDS", "GET", "UPCASED"]
+ 
+sum = [1, 2, 3, 4, 5].reduce(&:+)
+puts sum
+#=> 15
 
 # Destructuring
 

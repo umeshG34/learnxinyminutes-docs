@@ -439,7 +439,7 @@ self() #=> #PID<0.27.0>
 
 # Create an agent with `Agent.start_link`, passing in a function
 # The initial state of the agent will be whatever that function returns
-{ok, my_agent} = Agent.start_link(fn -> ["red", "green"] end)
+{:ok, my_agent} = Agent.start_link(fn -> ["red", "green"] end)
 
 # `Agent.get` takes an agent name and a `fn` that gets passed the current state
 # Whatever that `fn` returns is what you'll get back
@@ -457,3 +457,4 @@ Agent.update(my_agent, fn colors -> ["blue" | colors] end)
 * [Elixir Cheat Sheet](https://media.pragprog.com/titles/elixir/ElixirCheat.pdf)
 * ["Learn You Some Erlang for Great Good!"](https://learnyousomeerlang.com/) by Fred Hebert
 * ["Programming Erlang: Software for a Concurrent World"](https://pragprog.com/book/jaerlang2/programming-erlang) by Joe Armstrong
+* [Introduction to Elixir](https://learn-elixir.com/)
